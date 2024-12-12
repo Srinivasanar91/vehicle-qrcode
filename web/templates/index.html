@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle QR Codes</title>
+</head>
+<body>
+    <h1>Vehicle QR Codes</h1>
+    <ul>
+        {% for vehicle in vehicles %}
+        <li>
+            {{ vehicle.Vehicle_Number }} - <a href="/qr/{{ vehicle.Vehicle_Number }}">View QR Code</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
