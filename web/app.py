@@ -70,7 +70,7 @@ def allowed_file(filename):
 
 @app.route('/')
 @admin_required
-def index():
+def home():
     # Display all vehicles initially
     vehicles = pd.read_csv(r'C:\Users\KPRCAS\Desktop\JSExample\vehicle-qrcode\data\vehicle_data.csv').to_dict(orient='records')
     return render_template('index.html', vehicles=vehicles)
@@ -137,11 +137,13 @@ def upload():
                         try:
                             vehicle_number = row['Vehicle_Number']
                             qr_data = f"""Vehicle Number: {vehicle_number}
-Owner: {row['Owner_Name']}
-Batch: {row['Batch']}
-Department: {row['Department']}
-License Verified: {row['Licence_Verified']}
-Documents Verified: {row['Documents_Verified']}"""
+                            Student Name: {row['Student_Name']}
+                            Roll No:{row['Roll_No']}
+                            Batch: {row['Batch']}
+                            Owner: {row['Owner_Name']}
+                            License Verified: {row['Licence_Verified']}
+                            RC Virified: {row['RC_Verified']}
+                            Insurance Verified: {row['Insurance_Verified']}"""
                             qr_path = os.path.join(qr_code_folder, f"{vehicle_number}.png")
                             qr = qrcode.make(qr_data)
                             qr.save(qr_path)
@@ -159,4 +161,4 @@ Documents Verified: {row['Documents_Verified']}"""
     return render_template('upload.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
