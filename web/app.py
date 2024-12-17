@@ -70,7 +70,7 @@ def allowed_file(filename):
 
 @app.route('/')
 @admin_required
-def home():
+def index():
     # Display all vehicles initially
     vehicles = pd.read_csv(r'C:\Users\KPRCAS\Desktop\JSExample\vehicle-qrcode\data\vehicle_data.csv').to_dict(orient='records')
     return render_template('index.html', vehicles=vehicles)
@@ -161,4 +161,4 @@ def upload():
     return render_template('upload.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
