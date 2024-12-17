@@ -1,16 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle QR Codes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+            background: url('static\images\kprcas-2048x912.jpg') no-repeat center center fixed;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4A90E2;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #4A90E2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #304ceb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4A90E2;
+        }
+
+        a:hover {
+            color: #304ceb;
+        }
+
+        .upload-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Vehicle QR Codes</h1>
-    <ul>
-        {% for vehicle in vehicles %}
-        <li>
-            {{ vehicle.Vehicle_Number }} - <a href="/qr/{{ vehicle.Vehicle_Number }}">View QR Code</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <h1>KPRCAS Vehicle Details</h1>
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Search by Vehicle Number" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="upload-link">
+        <a href="/upload" target="_blank"> Upload CSV to Generate QR Codes in Bulk</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Owner Name</th>
+                <th>Batch</th>
+                <th>Department</th>
+                <th>Licence Verified</th>
+                <th>Documents_Verified</th>
+                <th>Document Link</Dth>
+            </tr>
+        </thead>
+        <tbody>
+            {% if vehicles %}
+            {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle['Vehicle_Number'] }}</td>
+                <td>{{ vehicle['Owner_Name'] }}</td>
+                <td>{{ vehicle['Batch'] }}</td>
+                <td>{{ vehicle['Department'] }}</td>
+                <td>{{ vehicle['Licence_Verified'] }}</td>
+                <td>{{ vehicle['Documents_Verified'] }}</td>
+                <td>
+                    {% if vehicle['Document_Link'] %}
+                    <a href="{{ vehicle['Document_Link'] }}" target="_blank">View License</a>
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="7">No vehicle details available</td>
+            </tr>
+            {% endif %}
+    </table>
 </body>
+
 </html>

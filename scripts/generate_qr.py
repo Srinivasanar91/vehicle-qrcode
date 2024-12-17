@@ -1,8 +1,7 @@
-import os
-import pandas as pd
 import qrcode
+import pandas as pd
 
-# Read vehicle data
+# Load vehicle data
 data = pd.read_csv(r'C:\Users\KPRCAS\Desktop\JSExample\vehicle-qrcode\data\vehicle_data.csv')
 
 # Generate QR codes
@@ -10,12 +9,14 @@ for _, row in data.iterrows():
     content = f"""
     Vehicle Number: {row['Vehicle_Number']}
     Owner Name: {row['Owner_Name']}
-    Model: {row['Vehicle_Model']}
-    Registration Year: {row['Registration_Year']}
+    Batch: {row['Batch']}
+    Department: {row['Department']}
+    Licence Verified: {row['Licence_Verified']}
+    Documents Verified: {row['Documents_Verified']}
+    Click the link: {row['Document_Link']}
+
     """
-    vehicle_number = row['Vehicle_Number']
-    filepath = rf"C:\Users\KPRCAS\Desktop\JSExample\vehicle-qrcode\qrcodes\{vehicle_number}.png"
     qr = qrcode.make(content)
-    qr.save(filepath)
+    qr.save(f"../qrcodes/{row['Vehicle_Number']}.png")
 
 print("QR codes generated successfully!")
